@@ -1,0 +1,87 @@
+/* Egypt English Adventure — design tokens.
+   Warm resort palette: sand, Nile teal, sun gold, sunset coral. */
+
+:root {
+  --sand-50: #fefaf3;
+  --sand-100: #fbf1e2;
+  --sand-200: #f5e6d0;
+  --sand-300: #e9d4b3;
+  --sand-400: #d9bd93;
+
+  --ink: #22303c;
+  --ink-soft: #4e5f6c;
+  --ink-faint: #5a6975;
+
+  --nile-800: #0a3b49;
+  --nile-700: #0e4f60;
+  --nile-600: #12667c;
+  --teal-600: #0f7d93;
+  --teal-500: #15a0b6;
+  --teal-400: #35c0d1;
+  --teal-100: #d6f2f6;
+
+  --sun-600: #d98b1f;
+  --sun-500: #f2a93b;
+  --sun-400: #ffc15e;
+  --sun-100: #fff0d4;
+
+  --coral-600: #d9552f;
+  --coral-500: #ef6b4e;
+  --coral-400: #ff8a6b;
+  --coral-100: #ffe4dc;
+
+  --palm-600: #268059;
+  --palm-500: #2e9166;
+  --palm-400: #48b183;
+  --palm-100: #dcf3e8;
+
+  --plum-500: #7a4bab;
+  --plum-100: #eee2fb;
+
+  /* Darker siblings used only for text on the matching tinted background,
+     so every label clears WCAG AA (4.5:1) rather than just looking bright. */
+  --sun-text: #8a5209;
+  --coral-text: #9e3517;
+  --palm-text: #1d6544;
+
+  /* Saturated fills that carry white text. Every one of these clears 4.5:1
+     against #fff, which the lighter brand tints above do not. */
+  --fill-teal-a: #0f7d93;
+  --fill-teal-b: #0a4f60;
+  --fill-coral-a: #c8461f;
+  --fill-coral-b: #9e3517;
+  --fill-coral-lip: #7d2810;
+  --fill-palm-a: #24784f;
+  --fill-palm-b: #1a5c3e;
+  --fill-amber-a: #b4551a;
+  --fill-amber-b: #96371a;
+
+  --danger-600: #bc3a3a;
+  --danger-500: #d64545;
+  --danger-100: #fbe0e0;
+
+  --surface: #ffffff;
+  --surface-tint: var(--sand-50);
+  --line: #ecdfcb;
+  --line-strong: #ddc9ab;
+
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(34, 48, 60, 0.06), 0 2px 6px rgba(34, 48, 60, 0.05);
+  --shadow: 0 2px 4px rgba(34, 48, 60, 0.06), 0 8px 20px rgba(34, 48, 60, 0.08);
+  --shadow-lg: 0 4px 10px rgba(34, 48, 60, 0.08), 0 18px 44px rgba(34, 48, 60, 0.14);
+  --shadow-inset: inset 0 2px 0 rgba(255, 255, 255, 0.7);
+
+  --font-display: 'Baloo 2', 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --header-height: 64px;
+  --max-width: 720px;
+
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
