@@ -12,11 +12,16 @@ No login, no backend, no paid services. Progress lives in `localStorage`.
 
 ---
 
+**Live app: https://simigargalovicova.github.io/English-Egypt/**
+
 ## Running it
+
+Needs Node 20.19+ or 22.12+.
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173
+npm run dev              # http://localhost:5173
+npm run dev -- --host    # also reachable from a phone on the same wifi
 ```
 
 | Script | What it does |
@@ -127,6 +132,23 @@ that still contains a slip gets the praise *and* a note for next time.
 - **Responsive** — built mobile-first and checked at 320, 390, 768 and 1280px with no
   horizontal overflow.
 - `prefers-reduced-motion` disables the animation throughout.
+
+## Deploying
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which lints, typechecks,
+tests and builds before publishing `dist/` to GitHub Pages — a failing test stops
+the deploy, so a broken lesson never reaches the live URL.
+
+Because Pages serves the app from `/English-Egypt/`, `vite.config.ts` sets that
+as the production `base`. Hosting at a domain root instead (Netlify, Vercel, your
+own server) just needs the prefix turned off:
+
+```bash
+BASE_PATH=/ npm run build
+```
+
+`npm run smoke` reads the prefix back out of the built HTML, so it always tests
+the URLs that actually ship.
 
 ## Layout
 

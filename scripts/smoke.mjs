@@ -14,8 +14,20 @@ import { extname, join } from 'node:path'
 const DIST = new URL('../dist/', import.meta.url).pathname
 const SHOTS = new URL('../screenshots/', import.meta.url).pathname
 const PORT = Number(process.env.SMOKE_PORT ?? 4188)
-const BASE = `http://127.0.0.1:${PORT}`
+const ORIGIN = `http://127.0.0.1:${PORT}`
 const CHROME = process.env.CHROME_PATH || undefined
+
+/**
+ * The production build may be rooted at a sub-path (GitHub Pages serves this
+ * repo from /English-Egypt/). Read the prefix back out of the built HTML so the
+ * test exercises exactly what gets deployed, whatever `base` is set to.
+ */
+async function readBasePath() {
+  const html = await readFile(join(DIST, 'index.html'), 'utf8')
+  const match = html.match(/<script[^>]+src="([^"]*)\/assets\//)
+  const prefix = match ? match[1] : ''
+  return prefix.endsWith('/') ? prefix : `${prefix}/`
+}
 
 const MIME = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
@@ -28,9 +40,13 @@ let step = 'startup'
 const ok = (m) => steps.push(`  ✓ ${m}`)
 const bad = (m, d) => problems.push(`  ✗ ${m}${d ? ` — ${d}` : ''}`)
 
-function serve() {
+function serve(basePath) {
   const server = createServer(async (req, res) => {
-    let file = join(DIST, decodeURIComponent(req.url.split('?')[0]))
+    let pathname = decodeURIComponent(req.url.split('?')[0])
+    if (basePath !== '/' && pathname.startsWith(basePath)) {
+      pathname = `/${pathname.slice(basePath.length)}`
+    }
+    let file = join(DIST, pathname)
     const info = await stat(file).catch(() => null)
     if (!info || info.isDirectory()) file = join(DIST, 'index.html')
     try {
@@ -190,7 +206,9 @@ function lookup(table, haystack) {
 
 async function main() {
   await mkdir(SHOTS, { recursive: true })
-  const server = await serve()
+  const basePath = await readBasePath()
+  const BASE = ORIGIN + basePath
+  const server = await serve(basePath)
   const browser = await chromium.launch(CHROME ? { executablePath: CHROME } : {})
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })
 
